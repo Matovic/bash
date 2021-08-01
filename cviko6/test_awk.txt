@@ -1,0 +1,4 @@
+Meno	Priezvisko	Test1	Test2	Test3	Projekt
+Jozo	Mrkvicka	0	0	15	-
+Aladar	Novakovic	0	1	2	-
+Anna 	Lakatosova	15	5	-	10

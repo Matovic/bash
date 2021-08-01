@@ -1,0 +1,106 @@
+Sed (stream editor) sluzi na spracovanie textu, ktory cez neho prudi. Silny nastroj, je vhodne naucit sa vyuzit jeho potencial.
+
+Princip cinnosti:
+Precita riadok,
+vykona prikazy,
+vypise riadok.
+
+Vyuzitie:
+Transformovat a upravit rozne data
+Zmena velkeho mnozstva zaznamov
+...
+
+Syntax:
+sed OPTIONS... [SCRIPT] [INPUTFILE]...
+
+Prepinace
+-n nevypisuj riadky
+-i vykonaj zmeny priamo v subore (in-place)
+-f nacitaj script zo suboru
+
+Script
+pozostava z adresy a prikazov
+
+Adresa
+1 prvy riadok
+3 treti riadok
+4,8 stvrty az osmy riadok
+5~10 piaty a potom kazdy desiaty riadok
+$ posledny riadok
+
+Prikazy
+p - vypisanie riadku
+= - vypis cislo riadku
+n - prejdi na dalsi riadok
+i - vlozenie textu pred riadok
+a - vlozenie textu za riadok
+c - vlozenie textu namiesto riadka
+d - vymazanie riadku
+s/vzorka/nahrada/[flags] - substitucia, nahradenie ;# fun with flags 
+
+man sed
+info sed
+
+Priklady
+sed sedinput.txt ;#zlyha
+sed '' sedinput.txt
+sed -n '' sedinput.txt
+sed -n 'p' sedinput.txt
+sed -n '=' sedinput.txt
+sed -n '=;p' sedinput.txt
+
+sed 'i vkladam pred riadok' sedinput.txt
+sed 'a vkladam za riadok' sedinput.txt
+sed '3a vkladam za treti riadok' sedinput.txt
+sed '3c vkladam namiesto tretieho riadka' sedinput.txt
+
+sed '3d' sedinput.txt ;# vymazem treti riadok
+
+sed 's/hello/world/' sedinput.txt
+
+echo 's/hello/world/g' > mojscript.sed
+sed -f mojscript.sed sedinput.txt
+
+sed 's/hello/world/g' sedinput.txt
+
+Pribeh
+V adresari /public/samples/ sa nachadza list, ktory kedysi Jozko Mrkvicka, napisal svojej frajerke Zuzke Blazkovie. Jozko sa vsak so Zuzkou rozisiel, pomozte mu (aj napriek moralnym otaznikom) prepisat list, podla nasledujucich uloh:
+
+Ulohy
+Vypiste vsetky riadku okrem siedmeho az desiateho.
+
+Zamente Zuzka za Lucka, len v tretom riadku.
+
+Zamente Zuzka za Lucka, vo vete Zuzka, ja Ta milujem.
+(pouzite poradie vyskytu)
+
+Zamente Zuzka za ZUZKA.
+
+Zamente Zuzka za zUZKA.
+
+Zamente ZUzka za zuZKA.
+
+Zamente mozno za nemozno. Nemozno nech nie je nenemozno. 
+
+Vypiste iba basnicku tak, ze z nej odstranite kazdy neparny riadok
+
+Vypiste iba basnicku tak, ze z nej odstranite kazdy parny riadok.
+
+Prepiste v subore list.txt Zuzka na Lucka.
+
+Vypiste iba basnicku s cislami radka, ktore budu na zaciatku kazdeho riadka.
+
+Bonus:
+Anonymizujte IP adresy zo suboru access.log z predchadzajuceho cvicenia a ulozte anonymizovany log do suboru anon.log. Rovnake adresy by mali byt nahradene rovnakou alternativnou adresou (napr. 66.249.73.135 nech je stale 123.45.67.89 a pod.).
+Vzorovy vystup:
+awk '{print $1}' anon.log | sort | uniq -c | sort -nr | head
+    482 205.239.40.230
+    364 119.244.103.50
+    357 243.191.211.29
+    273 100.19.84.149
+    113 101.16.99.96
+    102 244.82.6.5
+     99 166.176.144.141
+     84 18.171.92.82
+     83 155.56.4.205
+     82 151.215.186.37

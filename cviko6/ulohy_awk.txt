@@ -1,0 +1,68 @@
+AWK sluzi na pracu s textom a filtrovanie obsahu.
+
+Princip cinnosti:
+Prechadza subor po riadkoch, zaznamoch (records)
+Rozdeli kazdy vstup na jednotlive polia (fields)
+Porovna vstupny riadok/pole so vzorkou
+Ak nastane zhoda so vzorkou na riadku, vykona akciu(-e)
+
+Vyuzitie:
+Transformovat rozne data
+Vytvorit formatovane vystupy
+
+Syntax:
+awk options 'selection_criteria { action }' input-file > output-file
+
+Specialne premene
+Obsahuje premenne $1, $2, $3 ... $n, v ktorych su jednotilve polia aktualneho spracovavaneho zaznamu. V premennej $0 je samotny zaznam (riadok).
+
+FS field separator
+RS record separator
+NF pocet poli v aktalnom zazname
+NR cislo aktualneho zaznamu
+OFS vystupny field separator
+ORS vystupy record separator
+FILENAME nazov aktualneho suboru
+
+
+Priklady
+
+Subor zamestnanci
+awk '{print}' zamestnanci.txt
+
+awk '{print NR,$0}' zamestnanci.txt
+
+awk 'BEGIN { print "zoznam zamestnancov:"} { print } ' zamestnanci.txt
+
+awk 'BEGIN { print "zoznam zamestnancov:"} { print "zamestnanec: " $1 }' zamestnanci.txt
+
+awk 'BEGIN { print "zoznam zamestnancov:"} { print "zamestnanec: " $1 } END { print "koniec"}' zamestnanci.txt
+
+awk /^z/ zamestnanci.txt
+
+awk '/^z/ { print $1 ":" $NF }' zamestnanci.txt
+
+awk '$NF > 1000 {print NR,$0}' zamestnanci.txt
+
+awk '{sum+=$NF} END { print "Priemerny plat = " sum/NR}' zamestnanci.txt
+
+awk '/^z|^b/ { print $1 ":" $NF }' zamestnanci.txt
+
+Uloha: Spocitajte priemerny plat zamestnancov, ktorych meno sa zacina na "z" alebo "b".
+
+
+Subor access.log 
+Uloha 1: Spocitajte objem dat prenesenych z webservera v MB.
+
+Uloha 2: V subore access.log najdite 10 IP adries, z ktorych prislo najviac poziadaviek.
+
+Bonus: vypiste domenove mena najdenych IP adries
+Pomocka
+apt install dnsutils
+nslookup, host
+
+Uloha 3: Kolko percent zo vsetkych poziadaviek tvorili mobilne zariadenia? Kolko percent to tvori z celkoveho objemu dat?
+
+Uloha 4: Na ktoru url prislo najviac poziadaviek, ktore skoncili s chybou?
+
+
